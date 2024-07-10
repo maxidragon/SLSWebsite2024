@@ -1,0 +1,23 @@
+{
+    "ranking": "Ranking",
+    "upcomingCompetitions": "Upcoming Competitions",
+    "pastCompetitions": "Past Competitions",
+    "error": "Error",
+    "notFound": "Not Found",
+    "rankingTitle": "SLS league ranking",
+    "rankingInfo1": "Below the table you can find how the score is calculated",
+    "rankingInfo2": "Score are calculating with this rules:",
+    "rankingInfo3": "For each event you get points based on your position (see picture below)",
+    "rankingInfo4": "You don't get points if you don't have succesfull attempt in this event (for example 3 DNF's in 3BLD)",
+    "date": "Date",
+    "registrationStarts": "Registration starts",
+    "registrationCloses": "Registration closes",
+    "position": "Position",
+    "name": "Name",
+    "wcaId": "WCA ID",
+    "score": "Score",
+    "website": "Website",
+    "register": "Register",
+    "results": "Results",
+    "liveResults": "Live results"
+}

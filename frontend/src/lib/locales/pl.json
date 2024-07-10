@@ -1,0 +1,23 @@
+{
+    "ranking": "Ranking",
+    "upcomingCompetitions": "Nadchodzące zawody",
+    "pastCompetitions": "Zakończone zawody",
+    "error": "Błąd",
+    "notFound": "Nie znaleziono",
+    "rankingTitle": "Ranking Ligi SLS",
+    "rankingInfo1": "Pod tabelą znajdziesz informacje o tym, jak są obliczane punkty",
+    "rankingInfo2": "Punkty są obliczane zgodnie z następującymi zasadami:",
+    "rankingInfo3": "Za każdą konkurencję otrzymujesz punkty na podstawie swojego miejsca (patrz grafika poniżej)",
+    "rankingInfo4": "Nie otrzymasz punktów, jeśli nie uda ci się pomyślnie ukończyć żadnego ułożenia w danej konkurencji (np. będziesz mieć 3 DNF'y w 3BLD)",
+    "date": "Data",
+    "registrationStarts": "Rozpoczęcie rejestracji",
+    "registrationCloses": "Zakończenie rejestracji",
+    "position": "Miejsce",
+    "name": "Imię i nazwisko",
+    "wcaId": "WCA ID",
+    "score": "Punkty",
+    "website": "Strona WCA",
+    "register": "Zarejestruj się",
+    "results": "Wyniki",
+    "liveResults": "Wyniki live"
+}

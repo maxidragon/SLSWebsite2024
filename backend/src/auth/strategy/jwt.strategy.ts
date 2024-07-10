@@ -25,12 +25,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any): Promise<JwtAuthDto> {
-    const { userId, role } = payload;
+    const { userId } = payload;
 
-    if (!userId || !role) {
+    if (!userId) {
       throw new UnauthorizedException('Invalid token payload');
     }
 
-    return { userId, role };
+    return { userId };
   }
 }
