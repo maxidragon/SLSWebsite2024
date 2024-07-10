@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+}
+
+model Competition {
+  id                String             @id @default(uuid())
+  wcaId             String             @unique
+  name              String?
+  wcaWebsite        String?
+  startDate         DateTime?
+  endDate           DateTime?
+  registrationOpen  DateTime?
+  registrationClose DateTime?
+  isPublic          Boolean            @default(false)
+  Result            Result[]
+  CompetitionEvent  CompetitionEvent[]
+}
+
+model Competitor {
+  id     String   @id @default(uuid())
+  wcaId  String?
+  name   String?
+  Result Result[]
+}
+
+model Result {
+  id            String      @id @default(uuid())
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  competitorId  String
+  competitor    Competitor  @relation(fields: [competitorId], references: [id])
+  eventId       String
+  pos           Int
+  best          Int
+  average       Int
+
+  @@unique([competitionId, competitorId, eventId])
+}
+
+model CompetitionEvent {
+  id            String      @id @default(uuid())
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  eventId       String
+
+  @@unique([competitionId, eventId])
+}
