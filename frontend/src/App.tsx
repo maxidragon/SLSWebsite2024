@@ -6,6 +6,7 @@ import Competitions from "./pages/competitions/Competitions";
 import Login from "./pages/auth/login/Login";
 import { Toaster } from "react-hot-toast";
 import AdminCompetitions from "./pages/admin/competitions/AdminCompetitions";
+import ManageCompetition from "./pages/admin/competitions/manage-competition/ManageCompetition";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const App = () => {
         {
           path: "admin/competitions",
           element: <AdminCompetitions />
+        },
+        {
+          path: "admin/competitions/:id",
+          element: <ManageCompetition />,
         }
       ]
     },

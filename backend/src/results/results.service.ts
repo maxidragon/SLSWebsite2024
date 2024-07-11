@@ -10,21 +10,21 @@ export class ResultsService {
     private readonly wcaService: WcaService,
   ) {}
 
-  async getResultsFromWcaWebsite(competitionId: string, eventId?: string) {
-    const comp = await this.prisma.competition.findUnique({
+  async getResultsFromWcaWebsite(id: string, eventId?: string) {
+    const competition = await this.prisma.competition.findUnique({
       where: {
-        wcaId: competitionId,
+        id: id,
       },
     });
 
-    if (comp) {
-      const wcif = await this.wcaService.getPublicWcif(competitionId);
-      for (const event of wcif.data.events) {
+    if (competition) {
+      const wcif = await this.wcaService.getPublicWcif(competition.wcaId);
+      for (const event of wcif.events) {
         await this.prisma.competitionEvent.upsert({
           create: {
             competition: {
               connect: {
-                id: comp.id,
+                id: competition.id,
               },
             },
             eventId: event.id,
@@ -32,13 +32,13 @@ export class ResultsService {
           update: {},
           where: {
             competitionId_eventId: {
-              competitionId: comp.id,
+              competitionId: competition.id,
               eventId: event.id,
             },
           },
         });
       }
-      for (const person of wcif.data.persons) {
+      for (const person of wcif.persons) {
         const competitor = await this.prisma.competitor.findFirst({
           where: {
             wcaId: person.wcaId,
@@ -56,12 +56,12 @@ export class ResultsService {
       if (eventId) {
         await this.createResultsForEvent(
           wcif,
-          comp,
-          wcif.data.events.find((event) => event.id === eventId),
+          competition,
+          wcif.events.find((event) => event.id === eventId),
         );
       } else {
-        for (const eventInfo of wcif.data.events) {
-          await this.createResultsForEvent(wcif, comp, eventInfo);
+        for (const eventInfo of wcif.events) {
+          await this.createResultsForEvent(wcif, competition, eventInfo);
         }
       }
     } else {
@@ -75,7 +75,7 @@ export class ResultsService {
     });
     for (const round of event.rounds) {
       for (const result of round.results) {
-        const person = wcif.data.persons.find(
+        const person = wcif.persons.find(
           (person) => person.registrantId === result.personId,
         );
         const competitor = await this.prisma.competitor.findFirst({

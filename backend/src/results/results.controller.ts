@@ -1,15 +1,17 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ResultsService } from './results.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('results')
 export class ResultsController {
   constructor(private readonly resultsService: ResultsService) {}
 
-  @Get(':competitionId')
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
   async loadResultFromCompetition(
-    @Param('competitionId') competitionId: string,
+    @Param('id') id: string,
     @Query('eventId') eventId: string,
   ) {
-    return this.resultsService.getResultsFromWcaWebsite(competitionId, eventId);
+    return this.resultsService.getResultsFromWcaWebsite(id, eventId);
   }
 }

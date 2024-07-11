@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { WcaService } from 'src/wca/wca.service';
+import { UpdateCompetitionDto } from './dto/updateCompetition.dto';
 
 @Injectable()
 export class CompetitionsService {
@@ -17,27 +18,11 @@ export class CompetitionsService {
       orderBy: {
         startDate: 'desc',
       },
+      include: {
+        CompetitionEvent: true,
+      },
     });
-    const data = [];
-    for (const comp of competitions) {
-      const events = await this.prisma.competitionEvent.findMany({
-        where: {
-          competitionId: comp.id,
-        },
-      });
-      data.push({
-        id: comp.id,
-        name: comp.name,
-        events: events.map((event) => event.eventId),
-        wcaWebsite: comp.wcaWebsite,
-        wcaId: comp.wcaId,
-        isPublic: comp.isPublic,
-        startDate: comp.startDate,
-        endDate: comp.endDate,
-        registrationOpen: comp.registrationOpen,
-        registrationClose: comp.registrationClose,
-      });
-    }
+    const data = this.mapCompetitions(competitions);
 
     const pastCompetitions = data.filter((comp) => {
       return comp.endDate < new Date();
@@ -54,6 +39,69 @@ export class CompetitionsService {
     return {
       pastCompetitions,
       upcomingCompetitions,
+    };
+  }
+
+  async getAdminCompetitions() {
+    const competitions = await this.prisma.competition.findMany({
+      orderBy: {
+        startDate: 'desc',
+      },
+      include: {
+        CompetitionEvent: true,
+      },
+    });
+    return this.mapCompetitions(competitions);
+  }
+
+  mapCompetitions(competitions) {
+    return competitions.map((comp) => {
+      return {
+        id: comp.id,
+        name: comp.name,
+        events: comp.CompetitionEvent.map((event) => event.eventId),
+        wcaWebsite: comp.wcaWebsite,
+        wcaId: comp.wcaId,
+        isPublic: comp.isPublic,
+        startDate: comp.startDate,
+        endDate: comp.endDate,
+        registrationOpen: comp.registrationOpen,
+        registrationClose: comp.registrationClose,
+      };
+    });
+  }
+  async getCompetitionById(id: string) {
+    const competition = await this.prisma.competition.findUnique({
+      where: { id },
+      include: {
+        CompetitionEvent: true,
+      },
+    });
+    if (!competition) {
+      throw new HttpException('Not found', 404);
+    }
+
+    return {
+      id: competition.id,
+      name: competition.name,
+      events: competition.CompetitionEvent.map((event) => event.eventId),
+      wcaWebsite: competition.wcaWebsite,
+      wcaId: competition.wcaId,
+      isPublic: competition.isPublic,
+      startDate: competition.startDate,
+      endDate: competition.endDate,
+      registrationOpen: competition.registrationOpen,
+      registrationClose: competition.registrationClose,
+    };
+  }
+
+  async updateCompetition(id: string, data: UpdateCompetitionDto) {
+    await this.prisma.competition.update({
+      where: { id },
+      data,
+    });
+    return {
+      message: 'Competition updated',
     };
   }
 

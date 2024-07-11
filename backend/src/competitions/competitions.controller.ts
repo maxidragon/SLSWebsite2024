@@ -1,6 +1,7 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
 import { CompetitionsService } from './competitions.service';
 import { AuthGuard } from '@nestjs/passport';
+import { UpdateCompetitionDto } from './dto/updateCompetition.dto';
 
 @Controller('competitions')
 export class CompetitionsController {
@@ -12,8 +13,29 @@ export class CompetitionsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Get('admin')
+  async getAdminCompetitions() {
+    return this.competitionsService.getAdminCompetitions();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Get('sync/:id')
   async syncWcif(@Param('id') id: string) {
     return this.competitionsService.syncWcif(id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  async getCompetitionById(@Param('id') id: string) {
+    return this.competitionsService.getCompetitionById(id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put(':id')
+  async updateCompetition(
+    @Param('id') id: string,
+    @Body() updateCompetitionDto: UpdateCompetitionDto,
+  ) {
+    return this.competitionsService.updateCompetition(id, updateCompetitionDto);
   }
 }
