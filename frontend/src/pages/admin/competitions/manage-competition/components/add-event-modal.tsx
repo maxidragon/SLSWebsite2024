@@ -1,11 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { addEvent } from "@/lib/competitions";
-import events from "@/lib/events";
 import { useState } from "react";
 import toast from "react-hot-toast";
+
+import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { addEvent } from "@/lib/competitions";
+import events from "@/lib/events";
 
 interface AddEventModalProps {
     isOpen: boolean;
@@ -18,9 +30,11 @@ const AddEventModal = ({
     isOpen,
     handleClose,
     currentEvents,
-    competitionId
+    competitionId,
 }: AddEventModalProps) => {
-    const possibleEvents = events.filter(event => !currentEvents.includes(event.id));
+    const possibleEvents = events.filter(
+        (event) => !currentEvents.includes(event.id)
+    );
     const [selectedEvent, setSelectedEvent] = useState<string>("");
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -44,14 +58,17 @@ const AddEventModal = ({
                     </DialogTitle>
                 </DialogHeader>
                 <form className="mt-3 w-fit" onSubmit={handleSubmit}>
-                    <div className={'mb-4 flex w-full flex-col space-y-2'}>
+                    <div className={"mb-4 flex w-full flex-col space-y-2"}>
                         <Label htmlFor="eventId">Event</Label>
-                        <Select value={selectedEvent} onValueChange={(value) => setSelectedEvent(value)}>
+                        <Select
+                            value={selectedEvent}
+                            onValueChange={(value) => setSelectedEvent(value)}
+                        >
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select event" />
                             </SelectTrigger>
                             <SelectContent>
-                                {possibleEvents.map(event => (
+                                {possibleEvents.map((event) => (
                                     <SelectItem key={event.id} value={event.id}>
                                         {event.name}
                                     </SelectItem>

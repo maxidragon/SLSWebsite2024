@@ -1,10 +1,16 @@
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createCompetition } from "@/lib/competitions";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 interface CreateCompetitionModalProps {
     isOpen: boolean;
@@ -13,7 +19,7 @@ interface CreateCompetitionModalProps {
 
 const CreateCompetitionModal = ({
     isOpen,
-    handleClose
+    handleClose,
 }: CreateCompetitionModalProps) => {
     const navigate = useNavigate();
 
@@ -21,8 +27,8 @@ const CreateCompetitionModal = ({
         event.preventDefault();
         const form = event.currentTarget as HTMLFormElement;
         const formData = new FormData(form);
-        const wcaId = formData.get('wcaId') as string;
-        const name = formData.get('name') as string;
+        const wcaId = formData.get("wcaId") as string;
+        const name = formData.get("name") as string;
         const response = await createCompetition(wcaId, name);
         if (response.status === 201) {
             toast.success("Competition created successfully");
@@ -32,7 +38,7 @@ const CreateCompetitionModal = ({
             toast.error("Something went wrong");
         }
     };
-    
+
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent className="overflow-hidden p-5">
@@ -42,11 +48,11 @@ const CreateCompetitionModal = ({
                     </DialogTitle>
                 </DialogHeader>
                 <form className="mt-3 w-fit" onSubmit={handleSubmit}>
-                    <div className={'mb-4 flex w-full flex-col space-y-2'}>
+                    <div className={"mb-4 flex w-full flex-col space-y-2"}>
                         <Label htmlFor="wcaId">WCA ID</Label>
                         <Input id="wcaId" name="wcaId" placeholder="WCA ID" />
                     </div>
-                    <div className={'mb-4 flex w-full flex-col space-y-2'}>
+                    <div className={"mb-4 flex w-full flex-col space-y-2"}>
                         <Label htmlFor="name">Name</Label>
                         <Input id="name" name="name" placeholder="Name" />
                     </div>

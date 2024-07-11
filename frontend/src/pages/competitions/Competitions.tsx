@@ -1,8 +1,9 @@
+import { t } from "i18next";
+import { useEffect, useState } from "react";
+
 import CompetitionsList from "@/components/competitions-list";
 import { getAllCompetitions } from "@/lib/competitions";
 import { Competition } from "@/lib/interfaces";
-import { useState, useEffect } from "react";
-import { t } from "i18next";
 
 const Competitions = () => {
     const [pastCompetitions, setPastCompetitions] = useState<Competition[]>([]);
@@ -13,7 +14,10 @@ const Competitions = () => {
         });
     }, []);
     return (
-        <CompetitionsList title={t('pastCompetitions')} competitions={pastCompetitions} />
+        <CompetitionsList
+            title={t("pastCompetitions")}
+            competitions={pastCompetitions}
+        />
     );
 };
 

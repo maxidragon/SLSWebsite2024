@@ -1,5 +1,12 @@
-import { Table, TableHeader, TableRow, TableHead, TableBody } from "@/components/ui/table";
+import {
+    Table,
+    TableBody,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
 import { Competition } from "@/lib/interfaces";
+
 import CompetitionTableRow from "./competition-table-row";
 
 interface CompetitionsTableProps {
@@ -24,7 +31,11 @@ const CompetitionsTable = ({
             </TableHeader>
             <TableBody>
                 {competitions.map((competition) => (
-                    <CompetitionTableRow competition={competition} key={competition.id} fetchData={fetchData} />
+                    <CompetitionTableRow
+                        competition={competition}
+                        key={competition.id}
+                        fetchData={fetchData}
+                    />
                 ))}
             </TableBody>
         </Table>

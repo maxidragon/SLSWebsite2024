@@ -21,5 +21,7 @@
     "results": "Wyniki",
     "liveResults": "Wyniki live",
     "sponsors": "Sponsorzy i partnerzy",
-    "sponsorsDescription": "Bez nich organizacja ligi SLS byłaby niemożliwa. Jesteśmy wdzięczni za ich wsparcie!"
+    "sponsorsDescription": "Bez nich organizacja ligi SLS byłaby niemożliwa. Jesteśmy wdzięczni za ich wsparcie!",
+    "pageNotFound": "Strona nie została znaleziona",
+    "goBack": "Wróć na stronę główną"
 }

@@ -21,5 +21,7 @@
     "results": "Results",
     "liveResults": "Live results",
     "sponsors": "Sponsors & Partners",
-    "sponsorsDescription": "Without them, organizing competitions would be impossible. We are grateful for their support!"
+    "sponsorsDescription": "Without them, organizing competitions would be impossible. We are grateful for their support!",
+    "pageNotFound": "Page not found",
+    "goBack": "Go back to home"
 }
