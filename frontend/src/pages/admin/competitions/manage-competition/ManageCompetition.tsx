@@ -9,12 +9,16 @@ import { Competition } from "@/lib/interfaces";
 import { importResults } from "@/lib/results";
 import { useState, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import AddEventModal from "./components/add-event-modal";
+import { getEventName } from "@/lib/events";
 
 
 const ManageCompetition = () => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const [competition, setCompetiton] = useState<Competition | null>(null);
+    const [isOpenAddEventModal, setIsOpenAddEventModal] = useState(false);
 
     const fetchData = useCallback(async () => {
         if (!id) return;
@@ -39,6 +43,7 @@ const ManageCompetition = () => {
             const status = await deleteCompetition(competition.id);
             if (status === 204) {
                 toast.success("Competition deleted successfully");
+                navigate("/admin/competitions");
             } else {
                 toast.error("Something went wrong");
             }
@@ -47,10 +52,10 @@ const ManageCompetition = () => {
 
     const handleDeleteEvent = async (eventId: string) => {
         if (!competition) return;
-        if (!confirm(`Are you sure you want to delete ${eventId}?`)) return;
+        if (!confirm(`Are you sure you want to delete ${getEventName(eventId)}?`)) return;
         const status = await deleteEvent(competition.id, eventId);
         if (status === 204) {
-            toast.success(`${eventId} deleted successfully`);
+            toast.success(`${getEventName(eventId)} deleted successfully`);
         } else {
             toast.error("Something went wrong");
         }
@@ -69,10 +74,10 @@ const ManageCompetition = () => {
 
     const handleImport = async (eventId: string) => {
         if (!competition) return;
-        if (!confirm(`Are you sure you want to import results for ${eventId}?`)) return;
+        if (!confirm(`Are you sure you want to import results for ${getEventName(eventId)}?`)) return;
         const status = await importResults(competition.id, eventId);
         if (status === 200) {
-            toast.success(`Results for ${eventId} imported successfully`);
+            toast.success(`Results for ${getEventName(eventId)} imported successfully`);
         } else {
             toast.error("Something went wrong");
         }
@@ -87,7 +92,12 @@ const ManageCompetition = () => {
         } else {
             toast.error("Something went wrong");
         }
-    }
+    };
+
+    const handleCloseAddEventModal = () => {
+        setIsOpenAddEventModal(false);
+        fetchData();
+    };
 
     useEffect(() => {
         fetchData();
@@ -100,12 +110,14 @@ const ManageCompetition = () => {
         >
             <div className="flex flex-col gap-4 w-[50%]">
                 <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">Manage competition</h2>
-                <Button className="w-fit min-w-[20%]" onClick={handleSync}>
-                    Sync with WCA
-                </Button>
-                <Button variant="destructive" className="w-fit min-w-[20%]" onClick={handleDelete}>
-                    Delete competition
-                </Button>
+                <div className="flex gap-2">
+                    <Button className="w-fit min-w-[20%]" onClick={handleSync}>
+                        Sync with WCA
+                    </Button>
+                    <Button variant="destructive" className="w-fit min-w-[20%]" onClick={handleDelete}>
+                        Delete competition
+                    </Button>
+                </div>
                 <form className="my-8 w-fit" onSubmit={handleUpdate}>
                     <div className={'mb-4 flex w-full flex-col space-y-2'}>
                         <Label htmlFor="wcaId">WCA ID</Label>
@@ -144,9 +156,14 @@ const ManageCompetition = () => {
             </div>
             <div className="flex flex-col gap-4">
                 <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">Import results</h2>
-                <Button onClick={handleImportAll}>
-                    Import all events
-                </Button>
+                <div className="flex gap-2">
+                    <Button onClick={handleImportAll}>
+                        Import all events
+                    </Button>
+                    <Button onClick={() => setIsOpenAddEventModal(true)}>
+                        Add event
+                    </Button>
+                </div>
                 <Table className="w-full">
                     <TableHeader>
                         <TableRow>
@@ -158,7 +175,7 @@ const ManageCompetition = () => {
                         {competition.events.map((eventId) => (
                             <TableRow>
                                 <TableCell>
-                                    <span key={eventId} className={`cubing-icon event-${eventId}`} />
+                                    <span key={eventId} className={`cubing-icon event-${eventId}`} title={getEventName(eventId)} />
                                 </TableCell>
                                 <TableCell className="flex gap-2">
                                     <Button onClick={() => handleImport(eventId)}>
@@ -169,11 +186,16 @@ const ManageCompetition = () => {
                                     </Button>
                                 </TableCell>
                             </TableRow>
-
                         ))}
                     </TableBody>
                 </Table>
             </div>
+            <AddEventModal
+                isOpen={isOpenAddEventModal}
+                handleClose={handleCloseAddEventModal}
+                currentEvents={competition.events}
+                competitionId={competition.id}
+            />
         </div>
     );
 };

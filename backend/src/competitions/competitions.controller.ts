@@ -1,3 +1,4 @@
+import { AddEventToCompetitionDto } from './dto/addEventToCompetition.dto';
 import {
   Body,
   Controller,
@@ -55,6 +56,14 @@ export class CompetitionsController {
     @Body() data: UpdateCompetitionDto,
   ) {
     return this.competitionsService.updateCompetition(id, data);
+  }
+
+  @Post(':id/event')
+  async addEvent(
+    @Param('id') id: string,
+    @Body() data: AddEventToCompetitionDto,
+  ) {
+    return this.competitionsService.addEventToCompetition(id, data.eventId);
   }
 
   @UseGuards(AuthGuard('jwt'))

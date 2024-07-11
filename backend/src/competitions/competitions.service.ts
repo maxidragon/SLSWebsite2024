@@ -3,6 +3,7 @@ import { DbService } from '../db/db.service';
 import { WcaService } from 'src/wca/wca.service';
 import { UpdateCompetitionDto } from './dto/updateCompetition.dto';
 import { CreateCompetitionDto } from './dto/createCompetition.dto';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class CompetitionsService {
@@ -86,6 +87,26 @@ export class CompetitionsService {
         isPublic: false,
       },
     });
+  }
+
+  async addEventToCompetition(competitionId: string, eventId: string) {
+    try {
+      await this.prisma.competitionEvent.create({
+        data: {
+          competitionId,
+          eventId,
+        },
+      });
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          throw new HttpException('Event already added', 409);
+        }
+      }
+    }
+    return {
+      message: 'Event added',
+    };
   }
 
   mapCompetitions(competitions) {

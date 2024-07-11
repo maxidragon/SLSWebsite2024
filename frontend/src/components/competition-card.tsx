@@ -3,6 +3,7 @@ import { BackgroundGradient } from "./ui/background-gradient";
 import wca from "@/assets/wca.svg";
 import MagicButton from "./ui/magic-button";
 import { t } from "i18next";
+import { getEventName } from "@/lib/events";
 
 interface CompetitionCardProps {
   competition: Competition;
@@ -23,7 +24,7 @@ const CompetitionCard = ({ competition }: CompetitionCardProps) => {
           </p>
           <p className="text-3xl text-neutral-600 dark:text-neutral-400">
             {competition.events.map((eventId) => (
-              <span className={`cubing-icon event-${eventId}`} />
+              <span className={`cubing-icon event-${eventId}`} title={getEventName(eventId)} />
             ))}
           </p>
         </div>

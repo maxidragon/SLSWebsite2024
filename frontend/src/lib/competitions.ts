@@ -46,6 +46,16 @@ export const deleteCompetition = async (id: string) => {
   return response.status;
 };
 
+export const addEvent = async (competitionId: string, eventId: string) => {
+  const response = await backendRequest(
+    `competitions/${competitionId}/event`,
+    "POST",
+    true,
+    { eventId }
+  );
+  return response.status;
+};
+
 export const deleteEvent = async (competitionId: string, eventId: string) => {
   const response = await backendRequest(
     `competitions/${competitionId}/event/${eventId}`,
