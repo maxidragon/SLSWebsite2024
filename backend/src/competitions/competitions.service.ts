@@ -131,6 +131,7 @@ export class CompetitionsService {
       };
     });
   }
+
   async getCompetitionById(id: string) {
     const competition = await this.prisma.competition.findUnique({
       where: { id },
@@ -141,11 +142,21 @@ export class CompetitionsService {
     if (!competition) {
       throw new HttpException('Not found', 404);
     }
+    const results = await this.prisma.result.findMany({
+      select: {
+        eventId: true,
+      },
+      distinct: ['eventId'],
+      where: {
+        competitionId: competition.id,
+      },
+    });
 
     return {
       id: competition.id,
       name: competition.name,
       events: competition.CompetitionEvent.map((event) => event.eventId),
+      importedEvents: results.map((result) => result.eventId),
       wcaId: competition.wcaId,
       isPublic: competition.isPublic,
       startDate: competition.startDate,

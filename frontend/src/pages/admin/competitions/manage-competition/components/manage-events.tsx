@@ -38,6 +38,7 @@ const ManageEvents = ({ competition, fetchData }: ManageEventsProps) => {
             toast.success(
                 `Results for ${getEventName(eventId)} imported successfully`
             );
+            fetchData();
         } else {
             toast.error("Something went wrong");
         }
@@ -49,6 +50,7 @@ const ManageEvents = ({ competition, fetchData }: ManageEventsProps) => {
         const status = await importResults(competition.id);
         if (status === 200) {
             toast.success("Results imported successfully");
+            fetchData();
         } else {
             toast.error("Something went wrong");
         }
@@ -88,6 +90,12 @@ const ManageEvents = ({ competition, fetchData }: ManageEventsProps) => {
                         Add event
                     </Button>
                 </div>
+                <p className="text-neutral-400">
+                    Already imported events:{" "}
+                    {competition.importedEvents
+                        .map((eventId: string) => getEventName(eventId))
+                        .join(", ") || "None"}
+                </p>
                 <Table className="w-full">
                     <TableHeader>
                         <TableRow>

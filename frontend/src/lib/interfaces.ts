@@ -3,6 +3,7 @@ export interface Competition {
     name: string;
     wcaId: string;
     events: string[];
+    importedEvents: string[];
     wcaWebsite: string;
     isPublic: boolean;
     startDate: Date;
