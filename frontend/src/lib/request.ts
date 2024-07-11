@@ -4,7 +4,8 @@ const BACKEND_URL = import.meta.env.PROD
   ? "/api"
   : "http://localhost:5000";
 
-const WCA_ORIGIN = "https://www.worldcubeassociation.org";
+export const WCA_ORIGIN = "https://www.worldcubeassociation.org";
+export const WCA_LIVE_ORIGIN = "https://live.worldcubeassociation.org";
 
 export const backendRequest = (
   path: string,

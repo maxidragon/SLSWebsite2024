@@ -70,6 +70,7 @@ const ManageCompetition = () => {
         } else {
             toast.error("Something went wrong");
         }
+        fetchData();
     };
 
     const handleImport = async (eventId: string) => {

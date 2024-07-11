@@ -28,7 +28,7 @@ const CompetitionTableRow = ({
         fetchData();
     };
     return (
-        <TableRow>
+        <TableRow onClick={() => navigate(`/admin/competitions/${competition.id}`)} className="cursor-pointer">
             <TableCell>{competition.wcaId}</TableCell>
             <TableCell>{competition.name}</TableCell>
             <TableCell>

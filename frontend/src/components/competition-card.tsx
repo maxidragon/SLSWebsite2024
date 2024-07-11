@@ -4,14 +4,16 @@ import wca from "@/assets/wca.svg";
 import MagicButton from "./ui/magic-button";
 import { t } from "i18next";
 import { getEventName } from "@/lib/events";
+import { WCA_ORIGIN } from "@/lib/request";
+import { formatDates, magicButtonProperties } from "@/lib/utils";
 
 interface CompetitionCardProps {
   competition: Competition;
 }
 
 const CompetitionCard = ({ competition }: CompetitionCardProps) => {
-  const formattedDates = competition.startDate === competition.endDate ? new Date(competition.startDate).toLocaleDateString() : `${new Date(competition.startDate).toLocaleDateString()} - ${new Date(competition.endDate).toLocaleDateString()}`;
-  const isPast = new Date(competition.endDate).getTime() < new Date().getTime();
+  const formattedDates = formatDates(competition.startDate, competition.endDate);
+  const { showMagicButton, magicButtonText, magicButtonLink } = magicButtonProperties(competition);
   return (
     <div>
       <BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-slate-900  md:flex flex-col md:flex-row gap-3 md:justify-between">
@@ -29,11 +31,14 @@ const CompetitionCard = ({ competition }: CompetitionCardProps) => {
           </p>
         </div>
         <div className="flex flex-col gap-3 mt-4 md:mt-0 md:justify-center">
-          <button className="shadow-[inset_0_0_0_2px_#616467] text-black px-12 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent flex gap-2 items-center text-center justify-center hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          <a
+            href={`${WCA_ORIGIN}/competitions/${competition.wcaId}`}
+            target="_blank"
+            className="shadow-[inset_0_0_0_2px_#616467] cursor-pointer text-black px-12 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent flex gap-2 items-center text-center justify-center hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
             <img src={wca} width="25" height="25" />
             <span>{t('website')}</span>
-          </button>
-          <MagicButton text={isPast ? t('results') : t('register')} onClick={() => {}} />
+          </a>
+          {showMagicButton && <MagicButton text={magicButtonText} onClick={() => window.open(magicButtonLink)} />}
         </div>
       </BackgroundGradient>
     </div>

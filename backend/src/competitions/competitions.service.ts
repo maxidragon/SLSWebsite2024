@@ -27,12 +27,18 @@ export class CompetitionsService {
     const data = this.mapCompetitions(competitions);
 
     const pastCompetitions = data.filter((comp) => {
-      return comp.endDate < new Date();
+      return (
+        new Date(comp.endDate).getTime() < new Date().getTime() &&
+        new Date(comp.endDate).getDate() !== new Date().getDate()
+      );
     });
 
     const upcomingCompetitions = data
       .filter((comp) => {
-        return comp.startDate >= new Date();
+        return (
+          new Date(comp.endDate).getDate() === new Date().getDate() ||
+          new Date(comp.endDate).getTime() >= new Date().getTime()
+        );
       })
       .sort((a, b) => {
         return a.startDate - b.startDate;
@@ -177,7 +183,7 @@ export class CompetitionsService {
     await this.prisma.competition.update({
       where: { id },
       data: {
-        name: wcif.name,
+        name: wcif.shortName,
         registrationOpen: new Date(wcif.registrationInfo.openTime),
         registrationClose: new Date(wcif.registrationInfo.closeTime),
         startDate: new Date(wcif.schedule.startDate),
