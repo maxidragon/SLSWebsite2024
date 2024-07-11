@@ -13,7 +13,7 @@ const Ranking = () => {
 
     useEffect(() => {
         getRanking().then((persons) => {
-            setPersons(persons.sort((a, b) => b.score - a.score));
+            setPersons(persons.sort((a: Person, b: Person) => b.score - a.score));
         });
     }, []);
 
