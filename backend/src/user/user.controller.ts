@@ -13,7 +13,6 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
-import { UpdatePasswordDto } from './dto/updatePassword.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @UseGuards(AuthGuard('jwt'))
@@ -29,14 +28,6 @@ export class UserController {
   @Post()
   async createUser(@Body() data: CreateUserDto) {
     return await this.userService.createUser(data);
-  }
-
-  @Put('password/:id')
-  async updatePassword(
-    @Param('id') id: string,
-    @Body() data: UpdatePasswordDto,
-  ) {
-    return await this.userService.updatePassword(id, data.password);
   }
 
   @Put(':id')

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
-import { getUserInfo } from "@/lib/auth";
 import { getAdminCompetitions } from "@/lib/competitions";
 import { Competition } from "@/lib/interfaces";
 
@@ -9,7 +9,7 @@ import CompetitionsTable from "./components/competitions-table";
 import CreateCompetitionModal from "./components/create-competition-modal";
 
 const AdminCompetitions = () => {
-    const userInfo = getUserInfo();
+    const navigate = useNavigate();
     const [competitions, setCompetitions] = useState<Competition[]>([]);
     const [isOpenCreateCompetitionModal, setIsOpenCreateCompetitionModal] =
         useState(false);
@@ -31,13 +31,17 @@ const AdminCompetitions = () => {
 
     return (
         <div className="flex flex-col w-[70%] gap-3">
-            <h1>Welcome {userInfo.username} to admin panel!</h1>
-            <Button
-                className="w-fit"
-                onClick={() => setIsOpenCreateCompetitionModal(true)}
-            >
-                Create new competition
-            </Button>
+            <div className="flex gap-3">
+                <Button
+                    className="w-fit"
+                    onClick={() => setIsOpenCreateCompetitionModal(true)}
+                >
+                    Create new competition
+                </Button>
+                <Button className="w-fit" onClick={() => navigate("/users")}>
+                    Manage users
+                </Button>
+            </div>
             <CompetitionsTable competitions={competitions} />
             <CreateCompetitionModal
                 isOpen={isOpenCreateCompetitionModal}

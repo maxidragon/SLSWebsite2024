@@ -7,9 +7,10 @@ import Home from "@/pages/home/Home";
 import Layout from "./Layout/Layout";
 import AdminCompetitions from "./pages/admin/competitions/AdminCompetitions";
 import ManageCompetition from "./pages/admin/competitions/manage-competition/ManageCompetition";
+import Users from "./pages/admin/users/Users";
 import Login from "./pages/auth/login/Login";
 import Competitions from "./pages/competitions/Competitions";
-import NotFound from "./pages/NotFound/NotFound";
+import NotFound from "./pages/not-found/NotFound";
 import Person from "./pages/person/Person";
 import Ranking from "./pages/ranking/Ranking";
 import Settings from "./pages/settings/Settings";
@@ -43,6 +44,10 @@ const App = () => {
                 {
                     path: "admin/competitions/:id",
                     element: <ManageCompetition />,
+                },
+                {
+                    path: "users",
+                    element: <Users />,
                 },
                 {
                     path: "settings",

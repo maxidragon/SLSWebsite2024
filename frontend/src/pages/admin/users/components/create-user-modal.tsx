@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,29 +9,23 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createCompetition } from "@/lib/competitions";
+import { createUser } from "@/lib/users";
 
-interface CreateCompetitionModalProps {
+interface CreateUserModalProps {
     isOpen: boolean;
     handleClose: () => void;
 }
 
-const CreateCompetitionModal = ({
-    isOpen,
-    handleClose,
-}: CreateCompetitionModalProps) => {
-    const navigate = useNavigate();
-
+const CreateUserModal = ({ isOpen, handleClose }: CreateUserModalProps) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         const form = event.currentTarget as HTMLFormElement;
         const formData = new FormData(form);
-        const wcaId = formData.get("wcaId") as string;
-        const name = formData.get("name") as string;
-        const response = await createCompetition(wcaId, name);
+        const username = formData.get("username") as string;
+        const password = formData.get("password") as string;
+        const response = await createUser(username, password);
         if (response.status === 201) {
-            toast.success("Competition created successfully");
-            navigate(`/admin/competitions/${response.data.id}`);
+            toast.success("User created successfully");
             handleClose();
         } else {
             toast.error("Something went wrong");
@@ -41,20 +34,29 @@ const CreateCompetitionModal = ({
 
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
-            <DialogContent className="overflow-hidden p-10 w-fit">
+            <DialogContent className="overflow-hidden w-fit p-10">
                 <DialogHeader className="pt-3">
                     <DialogTitle className="text-2xl font-bold">
-                        Create competition
+                        Create user
                     </DialogTitle>
                 </DialogHeader>
                 <form className="mt-3 w-fit" onSubmit={handleSubmit}>
                     <div className={"mb-4 flex w-full flex-col space-y-2"}>
-                        <Label htmlFor="wcaId">WCA ID</Label>
-                        <Input id="wcaId" name="wcaId" placeholder="WCA ID" />
+                        <Label htmlFor="username">Username</Label>
+                        <Input
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                        />
                     </div>
                     <div className={"mb-4 flex w-full flex-col space-y-2"}>
-                        <Label htmlFor="name">Name</Label>
-                        <Input id="name" name="name" placeholder="Name" />
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                            type="password"
+                        />
                     </div>
                     <Button type="submit" className="w-fit min-w-[20%]">
                         Create
@@ -65,4 +67,4 @@ const CreateCompetitionModal = ({
     );
 };
 
-export default CreateCompetitionModal;
+export default CreateUserModal;

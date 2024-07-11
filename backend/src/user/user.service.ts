@@ -61,15 +61,6 @@ export class UserService {
     };
   }
 
-  async updatePassword(id: string, password: string) {
-    return this.prisma.user.update({
-      where: { id: id },
-      data: {
-        password: sha512(password),
-      },
-    });
-  }
-
   async deleteUser(id: string) {
     return this.prisma.user.delete({
       where: { id: id },

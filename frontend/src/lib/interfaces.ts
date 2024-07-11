@@ -37,3 +37,8 @@ export interface Result {
     average: number;
     score: number;
 }
+
+export interface User {
+    id: string;
+    username: string;
+}
