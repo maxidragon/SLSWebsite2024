@@ -6,12 +6,14 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Post,
   Put,
   UseGuards,
 } from '@nestjs/common';
 import { CompetitionsService } from './competitions.service';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateCompetitionDto } from './dto/updateCompetition.dto';
+import { CreateCompetitionDto } from './dto/createCompetition.dto';
 
 @Controller('competitions')
 export class CompetitionsController {
@@ -20,6 +22,12 @@ export class CompetitionsController {
   @Get()
   async getAllCompetitions() {
     return this.competitionsService.getAllCompetitions();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post()
+  async createCompetition(@Body() data: CreateCompetitionDto) {
+    return this.competitionsService.createCompetition(data);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -44,9 +52,19 @@ export class CompetitionsController {
   @Put(':id')
   async updateCompetition(
     @Param('id') id: string,
-    @Body() updateCompetitionDto: UpdateCompetitionDto,
+    @Body() data: UpdateCompetitionDto,
   ) {
-    return this.competitionsService.updateCompetition(id, updateCompetitionDto);
+    return this.competitionsService.updateCompetition(id, data);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id/event/:eventId')
+  async deleteEvent(
+    @Param('id') id: string,
+    @Param('eventId') eventId: string,
+  ) {
+    return this.competitionsService.deleteEvent(id, eventId);
   }
 
   @UseGuards(AuthGuard('jwt'))

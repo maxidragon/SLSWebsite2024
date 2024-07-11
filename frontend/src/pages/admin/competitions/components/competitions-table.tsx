@@ -4,10 +4,12 @@ import CompetitionTableRow from "./competition-table-row";
 
 interface CompetitionsTableProps {
     competitions: Competition[];
+    fetchData: () => void;
 }
 
 const CompetitionsTable = ({
-    competitions
+    competitions,
+    fetchData,
 }: CompetitionsTableProps) => {
     return (
         <Table>
@@ -22,7 +24,7 @@ const CompetitionsTable = ({
             </TableHeader>
             <TableBody>
                 {competitions.map((competition) => (
-                    <CompetitionTableRow competition={competition} key={competition.id} />
+                    <CompetitionTableRow competition={competition} key={competition.id} fetchData={fetchData} />
                 ))}
             </TableBody>
         </Table>

@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 interface CompetitionTableRowProps {
     competition: Competition;
+    fetchData: () => void;
 }
 
 const CompetitionTableRow = ({
     competition,
+    fetchData
 }: CompetitionTableRowProps) => {
 
     const navigate = useNavigate();
@@ -22,6 +24,7 @@ const CompetitionTableRow = ({
         } else {
             toast.error("Something went wrong");
         }
+        fetchData();
     };
     return (
         <TableRow>

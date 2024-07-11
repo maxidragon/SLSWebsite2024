@@ -2,6 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { WcaService } from 'src/wca/wca.service';
 import { UpdateCompetitionDto } from './dto/updateCompetition.dto';
+import { CreateCompetitionDto } from './dto/createCompetition.dto';
 
 @Injectable()
 export class CompetitionsService {
@@ -61,6 +62,30 @@ export class CompetitionsService {
     return {
       message: 'Competition deleted',
     };
+  }
+
+  async deleteEvent(competitionId: string, eventId: string) {
+    await this.prisma.competitionEvent.delete({
+      where: {
+        competitionId_eventId: {
+          competitionId,
+          eventId,
+        },
+      },
+    });
+    return {
+      message: 'Event deleted',
+    };
+  }
+
+  async createCompetition(data: CreateCompetitionDto) {
+    return await this.prisma.competition.create({
+      data: {
+        wcaId: data.wcaId,
+        name: data.name,
+        isPublic: false,
+      },
+    });
   }
 
   mapCompetitions(competitions) {

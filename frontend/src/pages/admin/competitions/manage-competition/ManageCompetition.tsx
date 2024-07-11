@@ -4,7 +4,7 @@ import DatePicker from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from "@/components/ui/table";
-import { deleteCompetition, getCompetitionById, syncWcif, updateCompetition } from "@/lib/competitions";
+import { deleteCompetition, deleteEvent, getCompetitionById, syncWcif, updateCompetition } from "@/lib/competitions";
 import { Competition } from "@/lib/interfaces";
 import { importResults } from "@/lib/results";
 import { useState, useEffect, useCallback } from "react";
@@ -43,6 +43,18 @@ const ManageCompetition = () => {
                 toast.error("Something went wrong");
             }
         }
+    };
+
+    const handleDeleteEvent = async (eventId: string) => {
+        if (!competition) return;
+        if (!confirm(`Are you sure you want to delete ${eventId}?`)) return;
+        const status = await deleteEvent(competition.id, eventId);
+        if (status === 204) {
+            toast.success(`${eventId} deleted successfully`);
+        } else {
+            toast.error("Something went wrong");
+        }
+        fetchData();
     };
 
     const handleSync = async () => {
@@ -133,7 +145,7 @@ const ManageCompetition = () => {
             <div className="flex flex-col gap-4">
                 <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">Import results</h2>
                 <Button onClick={handleImportAll}>
-                    Import for all events
+                    Import all events
                 </Button>
                 <Table className="w-full">
                     <TableHeader>
@@ -148,9 +160,12 @@ const ManageCompetition = () => {
                                 <TableCell>
                                     <span key={eventId} className={`cubing-icon event-${eventId}`} />
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="flex gap-2">
                                     <Button onClick={() => handleImport(eventId)}>
                                         Import
+                                    </Button>
+                                    <Button variant="destructive" onClick={() => handleDeleteEvent(eventId)}>
+                                        Delete
                                     </Button>
                                 </TableCell>
                             </TableRow>

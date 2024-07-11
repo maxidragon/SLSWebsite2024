@@ -13,7 +13,7 @@ const CompetitionCard = ({ competition }: CompetitionCardProps) => {
   const isPast = new Date(competition.endDate).getTime() < new Date().getTime();
   return (
     <div>
-      <BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-white dark:bg-zinc-900 md:flex flex-col md:flex-row gap-3 md:justify-between">
+      <BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-slate-900  md:flex flex-col md:flex-row gap-3 md:justify-between">
         <div className="text-center md:text-left">
           <h1 className="text-2xl sm:text-4xl font-bold text-black dark:text-neutral-200">
             {competition.name}
