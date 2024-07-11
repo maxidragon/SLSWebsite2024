@@ -25,3 +25,8 @@ export const syncWcif = async (id: string) => {
     const response = await backendRequest(`competitions/sync/${id}`, "GET", true);
     return response.status;
 };
+
+export const deleteCompetition = async (id: string) => {
+    const response = await backendRequest(`competitions/${id}`, "DELETE", true);
+    return response.status;
+};

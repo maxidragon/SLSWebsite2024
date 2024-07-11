@@ -7,6 +7,7 @@ import Login from "./pages/auth/login/Login";
 import { Toaster } from "react-hot-toast";
 import AdminCompetitions from "./pages/admin/competitions/AdminCompetitions";
 import ManageCompetition from "./pages/admin/competitions/manage-competition/ManageCompetition";
+import Ranking from "./pages/ranking/Ranking";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const App = () => {
           path: "competitions",
           element: <Competitions />,
         },
+
         {
           path: "auth/login",
           element: <Login />,
@@ -35,6 +37,10 @@ const App = () => {
           element: <ManageCompetition />,
         }
       ]
+    },
+    {
+      path: "ranking",
+      element: <Ranking />,
     },
   ]);
 

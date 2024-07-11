@@ -4,7 +4,7 @@ import DatePicker from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from "@/components/ui/table";
-import { getCompetitionById, syncWcif, updateCompetition } from "@/lib/competitions";
+import { deleteCompetition, getCompetitionById, syncWcif, updateCompetition } from "@/lib/competitions";
 import { Competition } from "@/lib/interfaces";
 import { importResults } from "@/lib/results";
 import { useState, useEffect, useCallback } from "react";
@@ -35,7 +35,13 @@ const ManageCompetition = () => {
 
     const handleDelete = async () => {
         if (confirm("Are you sure you want to delete this competition?")) {
-            //TODO: Implement delete competition
+            if (!competition) return;
+            const status = await deleteCompetition(competition.id);
+            if (status === 204) {
+                toast.success("Competition deleted successfully");
+            } else {
+                toast.error("Something went wrong");
+            }
         }
     };
 
@@ -88,7 +94,7 @@ const ManageCompetition = () => {
                 <Button variant="destructive" className="w-fit min-w-[20%]" onClick={handleDelete}>
                     Delete competition
                 </Button>
-                <form className="my-8 w-[30%]" onSubmit={handleUpdate}>
+                <form className="my-8 w-fit" onSubmit={handleUpdate}>
                     <div className={'mb-4 flex w-full flex-col space-y-2'}>
                         <Label htmlFor="wcaId">WCA ID</Label>
                         <Input value={competition?.wcaId} id="wcaId" name="wcaId" placeholder="WCA ID" onChange={(event) => {

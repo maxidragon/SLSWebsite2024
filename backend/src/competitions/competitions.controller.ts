@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { CompetitionsService } from './competitions.service';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateCompetitionDto } from './dto/updateCompetition.dto';
@@ -37,5 +47,12 @@ export class CompetitionsController {
     @Body() updateCompetitionDto: UpdateCompetitionDto,
   ) {
     return this.competitionsService.updateCompetition(id, updateCompetitionDto);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
+  async deleteCompetition(@Param('id') id: string) {
+    return this.competitionsService.deleteCompetition(id);
   }
 }

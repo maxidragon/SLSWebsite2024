@@ -54,6 +54,15 @@ export class CompetitionsService {
     return this.mapCompetitions(competitions);
   }
 
+  async deleteCompetition(id: string) {
+    await this.prisma.competition.delete({
+      where: { id },
+    });
+    return {
+      message: 'Competition deleted',
+    };
+  }
+
   mapCompetitions(competitions) {
     return competitions.map((comp) => {
       return {
