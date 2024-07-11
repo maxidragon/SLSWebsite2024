@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { t } from "i18next";
-import { Lock, LogOut, Menu } from "lucide-react";
+import { Lock, LogOut, Menu, Settings } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
@@ -102,15 +102,26 @@ const Header = () => {
                             </Button>
                         </nav>
                         {isUserLoggedIn() && (
-                            <nav className="flex items-center space-x-1">
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={handleLogout}
-                                >
-                                    <LogOut />
-                                </Button>
-                            </nav>
+                            <>
+                                <nav className="flex items-center space-x-1">
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() => navigate("/settings")}
+                                    >
+                                        <Settings />
+                                    </Button>
+                                </nav>
+                                <nav className="flex items-center space-x-1">
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={handleLogout}
+                                    >
+                                        <LogOut />
+                                    </Button>
+                                </nav>
+                            </>
                         )}
                     </div>
                 </div>

@@ -39,3 +39,14 @@ export const getUserInfo = () => {
     }
     return JSON.parse(userInfo);
 };
+
+export const changePassword = async (
+    oldPassword: string,
+    newPassword: string
+) => {
+    const response = await backendRequest(`auth/password/change`, "PUT", true, {
+        oldPassword,
+        newPassword,
+    });
+    return response.status;
+};

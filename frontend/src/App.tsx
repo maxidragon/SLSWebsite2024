@@ -12,6 +12,7 @@ import Competitions from "./pages/competitions/Competitions";
 import NotFound from "./pages/NotFound/NotFound";
 import Person from "./pages/person/Person";
 import Ranking from "./pages/ranking/Ranking";
+import Settings from "./pages/settings/Settings";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const App = () => {
                 {
                     path: "admin/competitions/:id",
                     element: <ManageCompetition />,
+                },
+                {
+                    path: "settings",
+                    element: <Settings />,
                 },
             ],
         },

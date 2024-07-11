@@ -11,13 +11,9 @@ import CompetitionTableRow from "./competition-table-row";
 
 interface CompetitionsTableProps {
     competitions: Competition[];
-    fetchData: () => void;
 }
 
-const CompetitionsTable = ({
-    competitions,
-    fetchData,
-}: CompetitionsTableProps) => {
+const CompetitionsTable = ({ competitions }: CompetitionsTableProps) => {
     return (
         <Table>
             <TableHeader>
@@ -34,7 +30,6 @@ const CompetitionsTable = ({
                     <CompetitionTableRow
                         competition={competition}
                         key={competition.id}
-                        fetchData={fetchData}
                     />
                 ))}
             </TableBody>

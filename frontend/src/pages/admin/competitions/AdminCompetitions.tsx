@@ -38,10 +38,7 @@ const AdminCompetitions = () => {
             >
                 Create new competition
             </Button>
-            <CompetitionsTable
-                competitions={competitions}
-                fetchData={fetchData}
-            />
+            <CompetitionsTable competitions={competitions} />
             <CreateCompetitionModal
                 isOpen={isOpenCreateCompetitionModal}
                 handleClose={handleCloseCreateCompetitionModal}
