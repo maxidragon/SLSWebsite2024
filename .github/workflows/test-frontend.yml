@@ -1,4 +1,4 @@
-name: Test
+name: Test frontend
 
 on:
   pull_request:
@@ -9,15 +9,22 @@ on:
       - 'frontend/**'
       - '.github/workflows/test-frontend.yml'
 
+defaults:
+  run:
+    working-directory: 'frontend'
+  
 jobs:
   test_frontend:
-    name: Frontend
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 18.x ]
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          package_json_file: 'frontend/package.json'
+          version: 9
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -25,14 +32,10 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: "frontend"
       - name: Install dependencies
-        working-directory: 'frontend'
         run: pnpm install
       - name: Run ESlint
-        working-directory: 'frontend'
         run: pnpm lint
       - name: Check formatting
-        working-directory: 'frontend'
         run: pnpm format:check
       - name: Build frontend
-        working-directory: 'frontend'
         run: pnpm build
