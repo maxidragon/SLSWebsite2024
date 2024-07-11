@@ -55,7 +55,9 @@ export const addEvent = async (competitionId: string, eventId: string) => {
         `competitions/${competitionId}/event`,
         "POST",
         true,
-        { eventId }
+        {
+            eventId,
+        }
     );
     return response.status;
 };

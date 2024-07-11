@@ -23,5 +23,8 @@
     "sponsors": "Sponsorzy i partnerzy",
     "sponsorsDescription": "Bez nich organizacja ligi SLS byłaby niemożliwa. Jesteśmy wdzięczni za ich wsparcie!",
     "pageNotFound": "Strona nie została znaleziona",
-    "goBack": "Wróć na stronę główną"
+    "goBack": "Wróć na stronę główną",
+    "login": "Zaloguj się",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło"
 }

@@ -61,5 +61,9 @@ export const magicButtonProperties = (competition: Competition) => {
         : isHappeningNow(competition.startDate, competition.endDate)
           ? `${WCA_LIVE_ORIGIN}/link/competitions/${competition.wcaId}`
           : `${WCA_ORIGIN}/competitions/${competition.wcaId}/register`;
-    return { showMagicButton, magicButtonText, magicButtonLink };
+    return {
+        showMagicButton,
+        magicButtonText,
+        magicButtonLink,
+    };
 };

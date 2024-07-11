@@ -29,7 +29,9 @@ import { importResults } from "@/lib/results";
 import AddEventModal from "./components/add-event-modal";
 
 const ManageCompetition = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{
+        id: string;
+    }>();
     const navigate = useNavigate();
     const [competition, setCompetiton] = useState<Competition | null>(null);
     const [isOpenAddEventModal, setIsOpenAddEventModal] = useState(false);

@@ -23,5 +23,8 @@
     "sponsors": "Sponsors & Partners",
     "sponsorsDescription": "Without them, organizing competitions would be impossible. We are grateful for their support!",
     "pageNotFound": "Page not found",
-    "goBack": "Go back to home"
+    "goBack": "Go back to home",
+    "login": "Sign in",
+    "username": "Username",
+    "password": "Password"
 }

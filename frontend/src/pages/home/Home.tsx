@@ -34,19 +34,27 @@ const Home = () => {
                 </div>
                 <div className="w-screen flex lg:flex-row flex-col lg:justify-evenly gap-32 items-center py-10 bg-grid-slate-900/[0.04] dark:bg-grid-slate-100/[0.03]">
                     <motion.div
-                        initial={{ opacity: 0, y: 100 }}
+                        initial={{
+                            opacity: 0,
+                            y: 100,
+                        }}
                         whileInView={{
                             opacity: 1,
                             y: 0,
-                            transition: { duration: 1, type: "spring" },
+                            transition: {
+                                duration: 1,
+                                type: "spring",
+                            },
                         }}
-                        viewport={{ once: true }}
+                        viewport={{
+                            once: true,
+                        }}
                         className="flex flex-col gap-8 sm:w-[520px] w-fit"
                     >
                         <h1 className="sm:text-3xl text-2xl w-full px-2 sm:px-0 leading-none font-bold tracking-tighter font-poppins text-center">
                             {t("sponsors")}
                         </h1>
-                        <p className="text-center text-neutral-600 dark:text-neutral-400">
+                        <p className="text-center text-neutral-600 dark:text-neutral-400 px-2 sm:px-0">
                             {t("sponsorsDescription")}
                         </p>
                         <img
