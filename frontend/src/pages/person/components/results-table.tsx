@@ -26,7 +26,10 @@ const ResultsTable = ({ resultsByCompetition }: ResultsTableProps) => {
                     </TableHead>
                     {events.map((event) => (
                         <TableHead key={event.id} className="text-center">
-                            <span className={`cubing-icon event-${event.id}`} />
+                            <span
+                                className={`cubing-icon event-${event.id}`}
+                                title={event.name}
+                            />
                         </TableHead>
                     ))}
                     <TableHead className="text-center">{t("score")}</TableHead>
