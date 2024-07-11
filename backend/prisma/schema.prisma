@@ -17,7 +17,6 @@ model Competition {
   id                String             @id @default(uuid())
   wcaId             String             @unique
   name              String?
-  wcaWebsite        String?
   startDate         DateTime?
   endDate           DateTime?
   registrationOpen  DateTime?

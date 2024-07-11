@@ -146,7 +146,6 @@ export class CompetitionsService {
       id: competition.id,
       name: competition.name,
       events: competition.CompetitionEvent.map((event) => event.eventId),
-      wcaWebsite: competition.wcaWebsite,
       wcaId: competition.wcaId,
       isPublic: competition.isPublic,
       startDate: competition.startDate,
