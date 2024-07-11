@@ -10,6 +10,7 @@ import ManageCompetition from "./pages/admin/competitions/manage-competition/Man
 import Login from "./pages/auth/login/Login";
 import Competitions from "./pages/competitions/Competitions";
 import NotFound from "./pages/NotFound/NotFound";
+import Person from "./pages/person/Person";
 import Ranking from "./pages/ranking/Ranking";
 
 const App = () => {
@@ -26,7 +27,10 @@ const App = () => {
                     path: "competitions",
                     element: <Competitions />,
                 },
-
+                {
+                    path: "persons/:wcaId",
+                    element: <Person />,
+                },
                 {
                     path: "auth/login",
                     element: <Login />,

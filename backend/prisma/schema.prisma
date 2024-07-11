@@ -30,6 +30,8 @@ model Competitor {
   id     String   @id @default(uuid())
   wcaId  String?
   name   String?
+  countryIso2 String?
+  avatarUrl  String?
   Result Result[]
 }
 

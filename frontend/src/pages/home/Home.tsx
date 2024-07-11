@@ -54,7 +54,7 @@ const Home = () => {
                         <h1 className="sm:text-3xl text-2xl w-full px-2 sm:px-0 leading-none font-bold tracking-tighter font-poppins text-center">
                             {t("sponsors")}
                         </h1>
-                        <p className="text-center text-neutral-600 dark:text-neutral-400 px-2 sm:px-0">
+                        <p className="text-center text-neutral-400 px-2 sm:px-0">
                             {t("sponsorsDescription")}
                         </p>
                         <img

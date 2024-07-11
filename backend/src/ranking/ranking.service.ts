@@ -17,8 +17,8 @@ export class RankingService {
       },
     });
     const ranking = [];
-    const includedResults = results.filter(
-      (result) => result.best !== -1 && result.best !== -2 && result.pos <= 20,
+    const includedResults = results.filter((result) =>
+      this.resultIncluded(result),
     );
     for (const result of includedResults) {
       const competitor = ranking.find(
@@ -35,5 +35,62 @@ export class RankingService {
     }
     ranking.sort((a, b) => b.score - a.score);
     return ranking;
+  }
+
+  async getPersonInfo(wcaId: string) {
+    const person = await this.prisma.competitor.findFirst({
+      where: {
+        wcaId,
+      },
+    });
+    const results = await this.prisma.result.findMany({
+      where: {
+        competitor: {
+          id: person.id,
+        },
+      },
+      include: {
+        competition: true,
+      },
+    });
+    const allCompetitions = await this.prisma.competition.findMany({
+      orderBy: {
+        startDate: 'desc',
+      },
+    });
+    const resultsByCompetition = [];
+    for (const competition of allCompetitions) {
+      const competitionResults = results.filter(
+        (result) => result.competition.id === competition.id,
+      );
+      if (competitionResults.length > 0) {
+        resultsByCompetition.push({
+          competition,
+          results: competitionResults.map((result) => ({
+            id: result.id,
+            eventId: result.eventId,
+            pos: result.pos,
+            best: result.best,
+            average: result.average,
+            score: this.resultIncluded(result)
+              ? SCORE_FOR_POSITION[result.pos]
+              : 0,
+          })),
+        });
+      }
+    }
+    return {
+      person,
+      resultsByCompetition: resultsByCompetition.map((result) => {
+        return {
+          ...result,
+          score: result.results.reduce((acc, r) => acc + r.score, 0),
+        };
+      }),
+    };
+  }
+
+  private resultIncluded(result) {
+    return result.best !== -1 && result.best !== -2 && result.pos <= 20;
   }
 }

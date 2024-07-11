@@ -1,4 +1,5 @@
 import { t } from "i18next";
+import { useNavigate } from "react-router-dom";
 
 import {
     Table,
@@ -16,6 +17,8 @@ interface RankingTableProps {
 }
 
 const RankingTable = ({ persons }: RankingTableProps) => {
+    const navigate = useNavigate();
+
     return (
         <Table className="bg-slate-900 bg-opacity-70">
             <TableHeader>
@@ -37,7 +40,13 @@ const RankingTable = ({ persons }: RankingTableProps) => {
                         position = position - 1;
                     }
                     return (
-                        <TableRow key={person.competitor.id}>
+                        <TableRow
+                            key={person.competitor.id}
+                            onClick={() =>
+                                navigate(`/persons/${person.competitor.wcaId}`)
+                            }
+                            className="cursor-pointer"
+                        >
                             <TableCell>{position + 1}</TableCell>
                             <TableCell>{person.competitor.name}</TableCell>
                             <TableCell>

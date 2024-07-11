@@ -19,4 +19,21 @@ export interface Competitor {
     id: string;
     wcaId: string;
     name: string;
+    countryIso2: string;
+    avatarUrl: string;
+}
+
+export interface ResultByCompetition {
+    competition: Competition;
+    results: Result[];
+    score: number;
+}
+
+export interface Result {
+    id: string;
+    eventId: string;
+    pos: number;
+    best: number;
+    average: number;
+    score: number;
 }

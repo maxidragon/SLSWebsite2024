@@ -49,6 +49,19 @@ export class ResultsService {
             data: {
               wcaId: person.wcaId || null,
               name: person.name,
+              countryIso2: person.countryIso2,
+              avatarUrl: person.avatar?.is_default ? null : person.avatar?.url,
+            },
+          });
+        } else {
+          await this.prisma.competitor.update({
+            where: {
+              id: competitor.id,
+            },
+            data: {
+              name: person.name,
+              countryIso2: person.countryIso2,
+              avatarUrl: person.avatar?.is_default ? null : person.avatar?.url,
             },
           });
         }
