@@ -5,6 +5,9 @@ import { Competition } from "@/lib/interfaces";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { t } from "i18next";
+import Header from "@/components/header";
+import sponsors from "@/assets/sponsors.png";
+import Footer from "@/components/footer";
 
 const Home = () => {
   const [upcomingCompetitions, setUpcomingCompetitons] = useState<Competition[]>([]);
@@ -16,20 +19,36 @@ const Home = () => {
   }, []);
 
   return (
+
     <>
-      <CompetitionsList title={t('upcomingCompetitions')} competitions={upcomingCompetitions} />
-      <motion.p
-        initial={{ opacity: 0, y: 100 }}
-        animate={{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 1, delay: 2, type: "spring" },
-        }}
-        className="2xl:text-xl lg:text-lg text-md tracking-tighter text-muted-foreground lg:w-1/3 md:w-2/5 w-full sm:px-16 px-8 text-center font-rubik drop-shadow-md"
-      >
-        Lorem ipsum de amet
-      </motion.p>
-      <BackgroundBeams />
+      <Header />
+      <div className="flex flex-col">
+        <div className="w-screen h-screen flex flex-col pt-[5rem] items-center gap-8 bg-dot-sky-400/[0.4] relative">
+          <CompetitionsList title={t('upcomingCompetitions')} competitions={upcomingCompetitions} />
+          <BackgroundBeams />
+        </div>
+        <div className="w-screen flex lg:flex-row flex-col lg:justify-evenly gap-32 items-center py-10 bg-grid-slate-900/[0.04] dark:bg-grid-slate-100/[0.03]">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 1, type: "spring" },
+            }}
+            viewport={{ once: true }}
+            className="flex flex-col gap-8 sm:w-[520px] w-fit"
+          >
+            <h1 className="sm:text-3xl text-2xl w-full px-2 sm:px-0 leading-none font-bold tracking-tighter font-poppins text-center">
+              {t('sponsors')}
+            </h1>
+            <p className="text-center text-neutral-600 dark:text-neutral-400">
+              {t('sponsorsDescription')}
+            </p>
+            <img src={sponsors} alt="sponsors" className="w-full px-2 sm:px-0" />
+          </motion.div>
+        </div>
+        <Footer />
+      </div>
     </>
   );
 };

@@ -13,12 +13,12 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
         {
           path: "competitions",
           element: <Competitions />,

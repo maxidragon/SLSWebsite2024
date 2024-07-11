@@ -7,6 +7,7 @@ import { t } from "i18next";
 import { useState, useEffect } from "react";
 import score from "@/assets/score.png";
 import { BackgroundBeams } from "@/components/ui/background-beams";
+import Footer from "@/components/footer";
 
 const Ranking = () => {
     const [persons, setPersons] = useState<Person[]>([]);
@@ -102,6 +103,7 @@ const Ranking = () => {
                     </motion.div>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };
