@@ -1,4 +1,5 @@
 import { t } from "i18next";
+import ReactCountryFlag from "react-country-flag";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -49,7 +50,14 @@ const RankingTable = ({ persons }: RankingTableProps) => {
                         >
                             <TableCell>{position + 1}</TableCell>
                             <TableCell>{person.competitor.name}</TableCell>
-                            <TableCell>
+                            <TableCell className="flex items-center gap-2 justify-center">
+                                <ReactCountryFlag
+                                    className="emojiFlag"
+                                    countryCode={person.competitor.countryIso2?.toUpperCase()}
+                                    style={{
+                                        fontSize: "1em",
+                                    }}
+                                />
                                 {person.competitor.wcaId && (
                                     <a
                                         href={`${WCA_ORIGIN}/persons/${person.competitor.wcaId}`}
